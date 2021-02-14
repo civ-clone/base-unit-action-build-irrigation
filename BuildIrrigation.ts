@@ -4,7 +4,7 @@ import {
   IMovementCostRegistry,
 } from '@civ-clone/core-unit/Rules/MovementCost';
 import DelayedAction from '@civ-clone/core-unit/DelayedAction';
-import { Irrigation } from '@civ-clone/base-tile-improvement-irrigation/Irrigation';
+import Irrigation from '@civ-clone/base-tile-improvement-irrigation/Irrigation';
 
 export class BuildIrrigation extends DelayedAction {
   perform(): void {
