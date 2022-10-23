@@ -1,4 +1,3 @@
 # base-unit-action-build-irrigation
 
-This is a template repo.
-
+This package provides the `BuildIrrigation` `Action` for `Unit`s.
