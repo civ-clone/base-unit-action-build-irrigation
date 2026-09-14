@@ -23,6 +23,6 @@
   "dependencies": {
     "@civ-clone/base-tile-improvement-irrigation": "^0.1.0",
     "@civ-clone/core-tile-improvement": "^0.1.0",
-    "@civ-clone/core-unit": "^0.1.0"
+    "@civ-clone/core-unit": "^0.1.20"
   }
 }
