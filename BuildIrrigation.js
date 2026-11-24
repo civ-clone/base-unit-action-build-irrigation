@@ -25,9 +25,12 @@ exports.BuildIrrigation = BuildIrrigation;
 (0, registerDelayedAction_1.default)({
     BusyRule: BuildingIrrigation_1.default,
     handler: exports.COMPLETE,
-    action: (unit) => new BuildIrrigation(unit.tile(), unit.tile(), unit),
-    complete: (unit) => {
-        new Irrigation_1.default(unit.tile());
+    // Built from the game the unit is loaded into, so finishing after a load writes where that game looks
+    //  (civ-clone/web-renderer#248).
+    action: (unit, context) => new BuildIrrigation(unit.tile(), unit.tile(), unit, context.rules, context.turn, context.pendingEffects),
+    // Through the rules the action was built with, the game's own, so its `Built` rules register it there.
+    complete: (unit, pendingEffect, action) => {
+        new Irrigation_1.default(unit.tile(), action.ruleRegistry());
     },
 });
 exports.default = BuildIrrigation;

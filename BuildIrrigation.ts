@@ -1,3 +1,4 @@
+import { BusyContext } from '@civ-clone/core-unit/BusyRegistry';
 import BuildingIrrigation from './Rules/BuildingIrrigation';
 import DelayedAction from '@civ-clone/core-unit/DelayedAction';
 import Irrigation from '@civ-clone/base-tile-improvement-irrigation/Irrigation';
@@ -27,9 +28,20 @@ export class BuildIrrigation extends DelayedAction {
 registerDelayedAction({
   BusyRule: BuildingIrrigation,
   handler: COMPLETE,
-  action: (unit: Unit) => new BuildIrrigation(unit.tile(), unit.tile(), unit),
-  complete: (unit: Unit) => {
-    new Irrigation(unit.tile());
+  // Built from the game the unit is loaded into, so finishing after a load writes where that game looks
+  //  (civ-clone/web-renderer#248).
+  action: (unit: Unit, context: BusyContext) =>
+    new BuildIrrigation(
+      unit.tile(),
+      unit.tile(),
+      unit,
+      context.rules,
+      context.turn,
+      context.pendingEffects
+    ),
+  // Through the rules the action was built with, the game's own, so its `Built` rules register it there.
+  complete: (unit: Unit, pendingEffect, action) => {
+    new Irrigation(unit.tile(), action.ruleRegistry());
   },
 });
 
